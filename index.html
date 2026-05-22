@@ -3,37 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flagship Discovery Tour - Audio Guide</title>
+    <title>Flagship Discovery Tour</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff6600">
 <body>
 
     <header class="app-header">
-        <div class="header-logo">
-            <i class="fa-solid fa-bicycle"></i> FLAGSHIP BIKE TOURS
-        </div>
+        <div class="header-logo"><i class="fa-solid fa-bicycle"></i> FLAGSHIP TOURS</div>
+        <button id="open-admin-btn" class="admin-toggle"><i class="fa-solid fa-gear"></i></button>
     </header>
 
     <section class="hero-section">
-        <h1>Explore Amsterdam's History</h1>
-        <p>Select a topic below to begin your self-guided audio experience.</p>
+        <h1>Explore Amsterdam</h1>
+        <p>Select a topic below to begin your audio experience.</p>
     </section>
 
-    <div class="activity-container" id="activity-list">
-        </div>
+    <div class="activity-container" id="activity-list"></div>
 
     <div id="player-drawer" class="bottom-drawer">
-        <div class="drawer-header">
+        <div class="drawer-image-header">
+            <img id="player-image" src="" alt="Location">
+            <div class="drawer-image-overlay"></div>
             <button id="close-drawer-btn" class="close-btn"><i class="fa-solid fa-chevron-down"></i></button>
         </div>
         
         <div class="drawer-content">
             <div class="player-title-row">
-                <div class="icon-circle large-icon" id="player-icon-container">
-                    <i id="player-icon" class="fa-solid fa-headphones"></i>
-                </div>
+                <div class="icon-circle large-icon" id="player-icon-container"><i id="player-icon" class="fa-solid fa-headphones"></i></div>
                 <h2 id="player-title">Title</h2>
             </div>
 
@@ -50,13 +49,45 @@
                 </div>
             </div>
 
-            <div class="scrollable-text" id="player-description">
-                </div>
+            <div class="scrollable-text" id="player-description"></div>
+        </div>
+    </div>
+
+    <div id="admin-portal" class="admin-modal">
+        <div class="admin-header">
+            <h2>Content Management</h2>
+            <button id="close-admin-btn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="admin-content">
+            <p style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--text-secondary);">Add a new activity. Data is saved locally for this POC.</p>
+            <form id="admin-form">
+                <input type="text" id="admin-title" placeholder="Title (e.g., Royal Palace)" required>
+                <input type="text" id="admin-subtitle" placeholder="Subtitle" required>
+                <textarea id="admin-text" placeholder="Audio Script & Text (Paragraphs separated by line breaks)" rows="5" required></textarea>
+                <button type="submit" class="btn-primary" style="margin-top: 1rem;">Save & Generate Content</button>
+            </form>
+            <button id="reset-data-btn" class="btn-secondary" style="margin-top: 2rem; border-color: red; color: red;">Reset to Default Data</button>
         </div>
     </div>
 
     <div id="drawer-backdrop" class="drawer-backdrop"></div>
 
     <script src="app.js"></script>
+   
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
 </body>
 </html>
