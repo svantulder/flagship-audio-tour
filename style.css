@@ -1,0 +1,169 @@
+:root {
+    --bg-color: #f8f9fa; /* Light background from screenshot */
+    --text-primary: #0a192f; /* Dark navy text */
+    --text-secondary: #4a5568;
+    --accent: #ff6600; /* Flagship Orange */
+    --accent-light: #fff0e6; /* Light orange for icon circles */
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(0, 0, 0, 0.05);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-primary);
+    background-color: var(--bg-color);
+    overflow-x: hidden;
+}
+
+h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+
+/* Header */
+.app-header {
+    background: white;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-logo {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Hero */
+.hero-section {
+    padding: 2rem 1.5rem;
+    background: white;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.hero-section h1 { font-size: 1.8rem; color: var(--text-primary); margin-bottom: 0.5rem; }
+.hero-section p { color: var(--text-secondary); font-size: 1rem; }
+
+/* List Container */
+.activity-container {
+    padding: 0 1.5rem 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* List Items matching screenshot style */
+.activity-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.activity-card:active { transform: scale(0.98); }
+
+.icon-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.icon-circle.large-icon {
+    width: 64px; height: 64px; font-size: 1.8rem;
+}
+
+.activity-info { flex-grow: 1; }
+.activity-title { font-weight: 700; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 0.2rem; }
+.activity-subtitle { font-size: 0.85rem; color: var(--text-secondary); }
+
+.play-action {
+    background: var(--accent);
+    color: white;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: none; cursor: pointer;
+}
+
+/* Glassmorphism Drawer */
+.bottom-drawer {
+    position: fixed; bottom: 0; left: 0; width: 100%; height: 90vh;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 1.5rem 1.5rem 0 0; 
+    box-shadow: 0 -15px 50px rgba(0, 0, 0, 0.15);
+    transform: translateY(100%); 
+    transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+    z-index: 1000; display: flex; flex-direction: column;
+    border-top: 1px solid rgba(255,255,255,0.5);
+}
+
+.bottom-drawer.active { transform: translateY(0); }
+
+.drawer-header {
+    padding: 1rem;
+    display: flex; justify-content: center;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.close-btn {
+    background: rgba(0,0,0,0.05); color: var(--text-primary); border: none;
+    border-radius: 50%; width: 40px; height: 40px; font-size: 1.2rem; cursor: pointer;
+}
+
+.drawer-content { padding: 1.5rem; flex-grow: 1; overflow-y: hidden; display: flex; flex-direction: column; }
+
+.player-title-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-shrink: 0; }
+.player-title-row h2 { font-size: 1.5rem; }
+
+.audio-player-card {
+    background: white; border: 1px solid var(--glass-border);
+    border-radius: 1rem; padding: 1.25rem; margin-bottom: 1.5rem; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); flex-shrink: 0;
+}
+
+.audio-controls { display: flex; align-items: center; gap: 1rem; }
+.audio-play-btn {
+    width: 54px; height: 54px; border-radius: 50%; background: var(--accent); color: white; border: none;
+    font-size: 1.4rem; display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.audio-progress-container { flex-grow: 1; display: flex; flex-direction: column; }
+.audio-times {
+    display: flex; justify-content: space-between; font-size: 0.85rem;
+    color: var(--text-secondary); margin-bottom: 0.5rem; font-weight: 500;
+}
+.audio-slider { width: 100%; -webkit-appearance: none; background: rgba(0,0,0,0.1); height: 6px; border-radius: 3px; }
+.audio-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); }
+
+.scrollable-text {
+    overflow-y: auto; padding-right: 0.5rem; flex-grow: 1; margin-bottom: 2rem;
+}
+.scrollable-text p { color: var(--text-secondary); line-height: 1.7; margin-top: 0; margin-bottom: 1.2rem; }
+
+.drawer-backdrop {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.4);
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease; z-index: 999;
+}
+.drawer-backdrop.active { opacity: 1; pointer-events: auto; }

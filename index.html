@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flagship Discovery Tour - Audio Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-logo">
+            <i class="fa-solid fa-bicycle"></i> FLAGSHIP BIKE TOURS
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <h1>Explore Amsterdam's History</h1>
+        <p>Select a topic below to begin your self-guided audio experience.</p>
+    </section>
+
+    <div class="activity-container" id="activity-list">
+        </div>
+
+    <div id="player-drawer" class="bottom-drawer">
+        <div class="drawer-header">
+            <button id="close-drawer-btn" class="close-btn"><i class="fa-solid fa-chevron-down"></i></button>
+        </div>
+        
+        <div class="drawer-content">
+            <div class="player-title-row">
+                <div class="icon-circle large-icon" id="player-icon-container">
+                    <i id="player-icon" class="fa-solid fa-headphones"></i>
+                </div>
+                <h2 id="player-title">Title</h2>
+            </div>
+
+            <div class="audio-player-card">
+                <div class="audio-controls">
+                    <button id="audio-toggle-btn" class="audio-play-btn"><i class="fa-solid fa-play"></i></button>
+                    <div class="audio-progress-container">
+                        <div class="audio-times">
+                            <span id="audio-current">0:00</span>
+                            <span id="audio-duration">0:00</span>
+                        </div>
+                        <input type="range" id="audio-slider" min="0" max="100" value="0" class="audio-slider" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scrollable-text" id="player-description">
+                </div>
+        </div>
+    </div>
+
+    <div id="drawer-backdrop" class="drawer-backdrop"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
