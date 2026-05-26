@@ -45,6 +45,7 @@ h1, h2, h3 { font-family: 'Poppins', sans-serif; }
 .play-action {
     background: var(--accent); color: white; width: 40px; height: 40px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center; border: none; cursor: pointer;
+    flex-shrink: 0; /* Add this to your existing .play-action class */
 }
 
 .bottom-drawer {
@@ -97,17 +98,155 @@ h1, h2, h3 { font-family: 'Poppins', sans-serif; }
 
 /* Admin Modal (Restored) */
 .admin-modal {
-    position: fixed; top: 100%; left: 0; width: 100%; height: 100vh; background: var(--bg-color);
-    z-index: 2000; transition: top 0.3s ease; display: flex; flex-direction: column;
+    position: fixed; 
+    top: 100%; left: 0; 
+    width: 100%; height: 100%; 
+    background: var(--bg-color);
+    z-index: 5000; 
+    transition: all 0.3s ease; 
+    display: flex; 
+    flex-direction: column;
+    opacity: 0;                   /* New */
+    pointer-events: none;         /* New */
+    visibility: hidden;           /* New */
 }
-.admin-modal.active { top: 0; }
-.admin-header { padding: 1.5rem; background: white; border-bottom: 1px solid var(--glass-border); position: relative; }
-.admin-header h2 { font-size: 1.3rem; }
-.admin-header .close-btn { background: rgba(0,0,0,0.1); color: var(--text-primary); top: 20px; }
-.admin-content { padding: 1.5rem; overflow-y: auto; }
-.admin-content input, .admin-content textarea {
-    width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 0.5rem;
-    font-family: 'Inter', sans-serif; font-size: 1rem;
+
+.admin-modal.active { 
+    top: 0; 
+    opacity: 1;                   /* New */
+    pointer-events: auto;         /* New */
+    visibility: visible;          /* New */
+}
+
+.admin-header { 
+    padding: 2rem 1.5rem 1rem 1.5rem; /* Added top padding here to fix sticking */
+    background: white; 
+    border-bottom: 1px solid var(--glass-border); 
+    display: flex; justify-content: space-between; align-items: center;
+}
+
+.admin-content { 
+    padding: 1.5rem; 
+    flex-grow: 1; 
+    overflow-y: auto; /* This ensures long forms can scroll */
+    display: block; 
 }
 .btn-primary { width: 100%; padding: 1rem; font-size: 1.1rem; font-weight: 600; border-radius: 0.75rem; background: var(--accent); color: white; border: none; cursor: pointer; }
 .btn-secondary { width: 100%; padding: 1rem; font-size: 1.1rem; font-weight: 600; border-radius: 0.75rem; background: transparent; border: 2px solid var(--text-secondary); cursor: pointer; }
+
+
+/* === DESKTOP OPTIMIZATION === */
+@media (min-width: 768px) {
+    /* 1. Reset Body to allow standard block flow */
+    body {
+        display: block;
+        background-color: #e2e8f0; 
+    }
+
+    /* 2. Constrain main UI components */
+    .app-header, 
+    .hero-section, 
+    .activity-container {
+        width: 100%;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #admin-text {
+    grid-column: span 2;
+    min-height: 150px;
+    }
+    
+    /* 3. Keep drawer centered and fixed-width on desktop */
+    .bottom-drawer {
+        width: 500px !important;
+        left: 50% !important;
+        transform: translate(-50%, 100%);
+    }
+    .bottom-drawer.active {
+        transform: translate(-50%, 0);
+    }
+    
+    /* 4. Admin Portal as a centered modal */
+    .admin-modal {
+        position: fixed;
+        top: 50%; 
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.95);
+        width: 600px; 
+        max-width: 90vw; 
+        height: auto; 
+        max-height: 85vh;
+        border-radius: 1.5rem;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
+    .admin-modal.active {
+        top: 50%; /* CRITICAL FIX: Stops the modal from flying to top: 0 */
+        transform: translate(-50%, -50%) scale(1);
+    }
+    
+    /* 5. Desktop Grid for Admin Form */
+    .admin-content { 
+        padding: 1.5rem; 
+        flex-grow: 1; 
+        overflow-y: auto; 
+        min-height: 0; 
+        display: block; 
+    }
+    
+    /* FIX: Added missing grid container so the inputs actually sit side-by-side */
+    #admin-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    
+    #admin-text, .btn-primary {
+        grid-column: span 2;
+        min-height: 200px;
+    }
+    #reset-data-btn {
+        margin-top: 1rem;
+    }
+}
+
+/* === PROGRESS BAR (These go AFTER the closing bracket above) === */
+.progress-wrapper { margin-top: 1.5rem; }
+.progress-bar-bg { background: #e2e8f0; height: 8px; border-radius: 4px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s ease; }
+.progress-text { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem; font-weight: 600; }
+
+/* Completed State for list items */
+.activity-card.completed { border-left: 5px solid #10b981; }
+.activity-card.completed .play-action { background: #10b981; }
+
+.audio-small-btn {
+    background: transparent; border: none; color: var(--text-secondary);
+    font-size: 1.1rem; cursor: pointer; padding: 0.5rem;
+}
+.audio-slider { cursor: pointer; }
+
+/* 1. Add this anywhere in your main CSS (outside of media queries) to style the inputs */
+#admin-form input,
+#admin-form textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--text-secondary);
+    border-radius: 0.5rem;
+    font-family: inherit;
+    font-size: 1rem;
+    background: white;
+    color: var(--text-primary);
+    box-sizing: border-box; /* Ensures padding doesn't break widths */
+}
+
+#admin-form input:focus,
+#admin-form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+#admin-form textarea {
+    resize: vertical; /* Prevents user from breaking the grid horizontally */
+}

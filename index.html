@@ -19,6 +19,13 @@
     <section class="hero-section">
         <h1>Explore Amsterdam</h1>
         <p>Select a topic below to begin your audio experience.</p>
+        
+        <div class="progress-wrapper">
+            <div class="progress-bar-bg">
+                <div id="progress-bar" class="progress-bar-fill"></div>
+            </div>
+            <div id="progress-text" class="progress-text">0 of 12 Stops Discovered</div>
+        </div>
     </section>
 
     <div class="activity-container" id="activity-list"></div>
@@ -38,14 +45,16 @@
 
             <div class="audio-player-card">
                 <div class="audio-controls">
+                    <button id="skip-back-btn" class="audio-small-btn"><i class="fa-solid fa-backward"></i></button>
                     <button id="audio-toggle-btn" class="audio-play-btn"><i class="fa-solid fa-play"></i></button>
-                    <div class="audio-progress-container">
-                        <div class="audio-times">
-                            <span id="audio-current">0:00</span>
-                            <span id="audio-duration">0:00</span>
-                        </div>
-                        <input type="range" id="audio-slider" min="0" max="100" value="0" class="audio-slider" disabled>
+                    <button id="skip-fwd-btn" class="audio-small-btn"><i class="fa-solid fa-forward"></i></button>
+                </div>
+                <div class="audio-progress-container">
+                    <div class="audio-times">
+                        <span id="audio-current">0:00</span>
+                        <span id="audio-duration">0:00</span>
                     </div>
+                    <input type="range" id="audio-slider" min="0" max="100" value="0" class="audio-slider">
                 </div>
             </div>
 

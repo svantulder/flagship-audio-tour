@@ -4,6 +4,7 @@ const defaultActivities = [
         id: "voc", title: "History & VOC", subtitle: "The 17th Century Economic Boom", icon: "fa-solid fa-ship",
         image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?auto=format&fit=crop&q=80&w=1000",
         audioFile: "VOC.mp3",
+        completed: false,
         text: [
             "Welcome to Amsterdam, a city with 750 years of rich history! Our journey begins in its early days as a humble fishing village. Over the centuries, Amsterdam blossomed into the wealthiest city in the world, particularly during the 17th century, thanks to the thriving spice trade brought in by the Dutch East India Company.",
             "Officially founded in 1275, Amsterdam started small, focusing on herring fishing. The city's fortunes changed when Floris V, Count of Holland, granted it toll privileges, allowing Amsterdam to operate without paying taxes to the Count. By 1306, Amsterdam received its city rights, enabling it to establish its own justice system. These privileges gave Amsterdam a significant edge over other trading cities, fostering its liberal ethos where anyone with skills or goods was welcomed.",
@@ -18,6 +19,7 @@ const defaultActivities = [
         id: "dam-square", title: "Dam Square", subtitle: "The Heart of Amsterdam", icon: "fa-solid fa-landmark",
         image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?auto=format&fit=crop&q=80&w=1000",
         audioFile: "Damsquare.mp3",
+        completed: false,
         text: [
             "You have arrived at Dam Square, the historical, political, and cultural epicenter of Amsterdam. To your right stands the magnificent Royal Palace, originally built during the Dutch Golden Age in the 17th century. What makes this structure truly remarkable is what lies beneath it: the entire massive stone building rests on 13,659 wooden piles driven deep into the marshy Amsterdam soil.",
             "Directly opposite the palace is the National Monument, a towering white pillar erected in 1956 to memorialize the victims of World War II. During the 1960s and 70s, this monument became a famous gathering place for hippies traveling across Europe, who would routinely sleep on its steps, much to the dismay of local authorities.",
@@ -28,6 +30,7 @@ const defaultActivities = [
         id: "canals", title: "The Grachtengordel", subtitle: "Urban Planning & Expansion", icon: "fa-solid fa-water",
         image: "https://images.unsplash.com/photo-1558000143-a60269f88bd3?auto=format&fit=crop&q=80&w=1000",
         audioFile: "grachtengordel.mp3",
+        completed: false,
         text: [
             "You are now looking at the Grachtengordel, the famous concentric canal ring of Amsterdam. It is not just a beautiful backdrop for photos; it is a 17th-century masterpiece of urban planning and hydraulic engineering that was designated as a UNESCO World Heritage site in 2010.",
             "In 1613, Amsterdam was bursting at the seams. Refugees and merchants were flooding into the city, creating a severe housing crisis. The city council devised a radical, highly organized expansion plan. They ordered the simultaneous digging of three massive, parallel residential canals: the Herengracht, the Keizersgracht, and the Prinsengracht.",
@@ -40,6 +43,7 @@ const defaultActivities = [
         id: "houseboats", title: "House Boats", subtitle: "From Shortage to Luxury", icon: "fa-solid fa-anchor",
         image: "https://images.unsplash.com/photo-1516815231560-8f41ec531527?auto=format&fit=crop&q=80&w=1000",
         audioFile: "houseboats.mp3",
+        completed: false,
         text: [
             "As you follow the water, you can't miss the floating homes permanently moored along the banks. Amsterdam is currently home to approximately 2,500 legal houseboats. But if you think living on one has always been a symbol of bohemian luxury, you are in for a surprise.",
             "The houseboat phenomenon was born out of sheer desperation. After World War II, Amsterdam faced a crippling housing shortage. At the same time, the Dutch shipping industry was modernizing, rendering hundreds of old wooden and steel cargo ships completely obsolete. Creative, cash-strapped residents bought these retired vessels for practically nothing and dragged them into the city center.",
@@ -52,6 +56,7 @@ const defaultActivities = [
         id: "dancing", title: "Dancing Houses", subtitle: "Subsidence & Architecture", icon: "fa-solid fa-building",
         image: "https://images.unsplash.com/photo-1574519914755-90117dcf49b3?auto=format&fit=crop&q=80&w=1000",
         audioFile: "dancing_houses.mp3",
+        completed: false,
         text: [
             "Take your eyes off the cycle path for a moment and look straight down the street. Notice how the buildings seem to be leaning on each other like tired friends after a long night out? Locals affectionately call these the 'Dancing Houses.'",
             "Earlier, we talked about why the houses lean forward intentionally—to hoist up furniture. But many of these houses are also leaning wildly to the side, and that is definitely not on purpose. The reason lies deep underground. Amsterdam is built on a massive, unstable peat swamp.",
@@ -64,6 +69,7 @@ const defaultActivities = [
         id: "anne-frank", title: "Anne Frank House", subtitle: "Prinsengracht 263", icon: "fa-solid fa-book",
         image: "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?auto=format&fit=crop&q=80&w=1000",
         audioFile: "anne_frank.mp3",
+        completed: false,
         text: [
             "We are now standing outside Prinsengracht 263. This traditional 17th-century canal house is arguably one of the most famous, and heartbreaking, historical landmarks on the planet: The Anne Frank House.",
             "Originally built in 1635 as a private residence, the building later served as a warehouse. In 1940, a man named Otto Frank moved his business, Opekta—a company that manufactured pectin for making jam—into this very building.",
@@ -77,6 +83,7 @@ const defaultActivities = [
         id: "jordaan", title: "The Jordaan", subtitle: "Working-Class History", icon: "fa-solid fa-map",
         image: "https://images.unsplash.com/photo-1616057053531-10c0b8deef1e?auto=format&fit=crop&q=80&w=1000",
         audioFile: "jordaan.mp3",
+        completed: false,
         text: [
             "You have just crossed into the Jordaan. Immediately, you'll notice the vibe changes. The grand, sweeping canals of the wealthy merchants are gone, replaced by narrow, chaotic streets and tiny, crooked houses.",
             "When Amsterdam expanded in 1612, this district was built strictly as a working-class enclave to house the laborers, artisans, and immigrants who kept the wealthy parts of the city running. Unlike the rest of the city, which was mathematically planned, the Jordaan's streets simply followed the old, diagonal agricultural ditches that were already there.",
@@ -89,6 +96,7 @@ const defaultActivities = [
         id: "westerkerk", title: "Westerkerk", subtitle: "17th Century Protestant Architecture", icon: "fa-solid fa-church",
         image: "https://images.unsplash.com/photo-1596700720496-ec619cdfb780?auto=format&fit=crop&q=80&w=1000",
         audioFile: "westerkerk.mp3",
+        completed: false,
         text: [
             "Look up, and you can't miss the Westerkerk, or Western Church. Constructed between 1620 and 1631 by the famous architect Hendrick de Keyser, it holds a special place in history as the first major purpose-built Protestant church in Amsterdam following the Reformation.",
             "Its most striking feature is the Westertoren, the massive church tower. Standing at exactly 87 meters, it remains the highest tower in the entire city. But look closely at the very top. You'll see a bright blue and gold crown.",
@@ -101,6 +109,7 @@ const defaultActivities = [
         id: "leidseplein", title: "Leidse Square", subtitle: "From Tollgate to Transit Hub", icon: "fa-solid fa-ticket",
         image: "https://images.unsplash.com/photo-1600623307567-932d0ff10a0e?auto=format&fit=crop&q=80&w=1000",
         audioFile: "leidseplein.mp3",
+        completed: false,
         text: [
             "Welcome to the chaotic, vibrant energy of Leidseplein, or Leiden Square. If you're looking for street performers, nightlife, or to catch a tram, this is ground zero. But its origins were entirely practical.",
             "In the 17th century, this area marked the very edge of the city. It served as a massive tollgate and a 'wagenplein'—a wagon square. Farmers and merchants traveling from the nearby city of Leiden would arrive here, unhitch their horses, and park their heavy carts before walking into the delicate inner city to sell their goods.",
@@ -113,6 +122,7 @@ const defaultActivities = [
         id: "vondelpark", title: "Vondelpark", subtitle: "19th Century Landscape Engineering", icon: "fa-solid fa-tree",
         image: "https://images.unsplash.com/photo-1524047934617-cb782c24e5f3?auto=format&fit=crop&q=80&w=1000",
         audioFile: "vondelpark.mp3",
+        completed: false,
         text: [
             "Cycle through the wrought-iron gates and take a deep breath. You are now inside Vondelpark, the most famous and heavily visited park in the Netherlands. But unlike the ancient city center, this green oasis is relatively new.",
             "The park opened in 1865, originally called simply the 'Nieuwe Park' (New Park). It wasn't built by the city government, but by a private association of wealthy citizens who wanted an elegant space to ride their horses and escape the cramped, smelly streets.",
@@ -125,6 +135,7 @@ const defaultActivities = [
         id: "museumplein", title: "Museum Square", subtitle: "The Cultural Quarter", icon: "fa-solid fa-building-columns",
         image: "https://images.unsplash.com/photo-1578500213812-706b83f3ee8b?auto=format&fit=crop&q=80&w=1000",
         audioFile: "museumplein.mp3",
+        completed: false,
         text: [
             "As you enter Museumplein, or Museum Square, you are standing in the undisputed cultural heavyweight champion of the Netherlands. The vast, open lawn stretching out before you is framed by three world-renowned institutions, each representing a totally different era of architecture.",
             "At the head of the square sits the colossal Rijksmuseum. Completed in 1885 by architect Pierre Cuypers, its gothic-renaissance style was hugely controversial at the time. Protestant Amsterdammers complained it looked far too much like a Catholic cathedral! Inside, it houses the nation's greatest treasures, including Rembrandt's The Night Watch.",
@@ -137,6 +148,7 @@ const defaultActivities = [
         id: "bicycles", title: "Bicycle Infrastructure", subtitle: "Urban Mobility Revolution", icon: "fa-solid fa-bicycle",
         image: "https://images.unsplash.com/photo-1563290616-e41c4da9cb1f?auto=format&fit=crop&q=80&w=1000",
         audioFile: "bicycles.mp3",
+        completed: false,
         text: [
             "Take a look at the red asphalt beneath your wheels. Amsterdam is globally famous as the undisputed bicycle capital of the world. Today, there are an estimated 881,000 bicycles in the city—which is actually more bikes than there are people!",
             "But this two-wheeled utopia was not an accident, and it certainly wasn't the historical default. It is the result of fierce protests and aggressive urban policy. During the economic boom of the 1950s and 60s, Amsterdam was actually destroying its history to make way for the automobile. Historic neighborhoods were being leveled to build multi-lane highways right through the city center.",
@@ -149,6 +161,7 @@ const defaultActivities = [
         id: "three-crosses", title: "The Three Crosses", subtitle: "The Coat of Arms (XXX)", icon: "fa-solid fa-shield-halved",
         image: "https://images.unsplash.com/photo-1616428613437-01ed58c14f48?auto=format&fit=crop&q=80&w=1000",
         audioFile: "three_crosses.mp3",
+        completed: false,
         text: [
             "As you travel through the city, you will see a specific symbol absolutely everywhere. Look at the brown metal poles separating the sidewalk from the street, look at the municipal trash cans, or the flags hanging from government buildings. You will see three bold 'X's in a row: XXX.",
             "Because Amsterdam has a famous red-light district, many tourists naturally assume the XXX is a cheeky reference to adult entertainment. Another pervasive, romantic urban myth claims the three crosses represent the three historical plagues that threatened the city: fire, floods, and the Black Death.",
@@ -187,21 +200,47 @@ let currentActivityHasMp3 = false;
 // Render List
 function renderList() {
     activityList.innerHTML = '';
+    let completedCount = 0;
+
     activities.forEach(act => {
+        if (act.completed) completedCount++;
+
         const card = document.createElement('div');
-        card.className = 'activity-card';
+        card.className = `activity-card ${act.completed ? 'completed' : ''}`;
         card.innerHTML = `
             <div class="icon-circle"><i class="${act.icon}"></i></div>
             <div class="activity-info">
-                <div class="activity-title">${act.title}</div>
+                <div class="activity-title">${act.title} ${act.completed ? '<i class="fa-solid fa-check-circle" style="color:#10b981; margin-left:8px;"></i>' : ''}</div>
                 <div class="activity-subtitle">${act.subtitle}</div>
             </div>
-            <button class="play-action"><i class="fa-solid fa-play"></i></button>
+            <button class="play-action"><i class="fa-solid ${act.completed ? 'fa-rotate-left' : 'fa-play'}"></i></button>
         `;
-        // Pass true to autoplay
         card.addEventListener('click', () => openPlayer(act, true));
         activityList.appendChild(card);
     });
+
+    // Update Progress Bar
+    const progressPercent = (completedCount / activities.length) * 100;
+    document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+    document.getElementById('progress-text').innerText = `${completedCount} of ${activities.length} Stops Discovered`;
+}
+
+function evaluateBadges() {
+    const completedIds = activities.filter(a => a.completed).map(a => a.id);
+    
+    const badges = [];
+    if (completedIds.includes('voc') && completedIds.includes('anne-frank')) {
+        badges.push("History Buff");
+    }
+    if (completedIds.includes('canals') && completedIds.includes('houseboats')) {
+        badges.push("Canal Explorer");
+    }
+
+    // Output to a new UI element
+    const badgeContainer = document.getElementById('badge-container');
+    if (badgeContainer) {
+        badgeContainer.innerHTML = badges.map(b => `<span class="badge">${b}</span>`).join('');
+    }
 }
 
 // Audio System
@@ -218,36 +257,69 @@ function formatTime(seconds) {
 }
 
 function stopAudio() {
-    window.speechSynthesis.cancel();
-    nativeAudio.pause(); nativeAudio.currentTime = 0;
-    clearInterval(audioTimer); isPlaying = false; currentAudioTime = 0;
-    audioToggleBtn.innerHTML = '<i class="fa-solid fa-play"></i>'; audioSlider.value = 0; audioCurrent.innerText = "0:00";
+    // Stop playback
+    currentActivityHasMp3 ? nativeAudio.pause() : window.speechSynthesis.cancel();
+    nativeAudio.currentTime = 0;
+    
+    // Reset UI and State
+    clearInterval(audioTimer); 
+    isPlaying = false; 
+    currentAudioTime = 0;
+    audioToggleBtn.innerHTML = '<i class="fa-solid fa-play"></i>'; 
+    audioSlider.value = 0; 
+    audioCurrent.innerText = "0:00";
 }
 
+// NEW: Scrubbing and Skipping Logic
+audioSlider.addEventListener('input', (e) => {
+    const seekTime = (e.target.value / 100) * estimatedDuration;
+    if (currentActivityHasMp3) {
+        nativeAudio.currentTime = seekTime;
+    } else {
+        currentAudioTime = seekTime; // TTS scrubbing is limited
+    }
+});
+
+document.getElementById('skip-back-btn').addEventListener('click', () => {
+    if (currentActivityHasMp3) nativeAudio.currentTime = Math.max(0, nativeAudio.currentTime - 5);
+});
+
+document.getElementById('skip-fwd-btn').addEventListener('click', () => {
+    if (currentActivityHasMp3) nativeAudio.currentTime = Math.min(estimatedDuration, nativeAudio.currentTime + 5);
+});
+
+// FIX: Ensure toggleAudio respects the slider interaction
 function toggleAudio() {
     initAudio();
     if (isPlaying) {
         currentActivityHasMp3 ? nativeAudio.pause() : window.speechSynthesis.pause();
-        clearInterval(audioTimer); isPlaying = false;
+        clearInterval(audioTimer); 
+        isPlaying = false;
         audioToggleBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
     } else {
         if (currentActivityHasMp3) {
             nativeAudio.play();
-            nativeAudio.onended = () => stopAudio();
         } else {
             if (currentAudioTime === 0) {
                 const utterance = new SpeechSynthesisUtterance(fullScriptToRead);
-                utterance.lang = 'en-US'; utterance.rate = 0.9; utterance.onend = () => stopAudio();
+                utterance.lang = 'en-US'; utterance.rate = 0.9;
                 window.speechSynthesis.speak(utterance);
             } else { window.speechSynthesis.resume(); }
         }
 
-        isPlaying = true; audioToggleBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+        isPlaying = true; 
+        audioToggleBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+        
         audioTimer = setInterval(() => {
             currentAudioTime = currentActivityHasMp3 ? nativeAudio.currentTime : currentAudioTime + 0.1;
             audioCurrent.innerText = formatTime(currentAudioTime);
             audioSlider.value = (currentAudioTime / estimatedDuration) * 100;
-            if (!currentActivityHasMp3 && currentAudioTime >= estimatedDuration) stopAudio();
+            
+            // Auto-complete logic when file ends
+            if (currentAudioTime >= estimatedDuration) {
+                stopAudio();
+                markActivityComplete();
+            }
         }, 100);
     }
 }
@@ -307,35 +379,65 @@ function closeDrawer() {
 }
 
 // --- CMS Admin Logic ---
-openAdminBtn.addEventListener('click', () => adminPortal.classList.add('active'));
-closeAdminBtn.addEventListener('click', () => adminPortal.classList.remove('active'));
+document.addEventListener('DOMContentLoaded', () => {
+    const adminPortal = document.getElementById('admin-portal');
+    const openAdminBtn = document.getElementById('open-admin-btn');
+    const closeAdminBtn = document.getElementById('close-admin-btn');
+    const adminForm = document.getElementById('admin-form');
+    const resetDataBtn = document.getElementById('reset-data-btn');
 
-adminForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const newActivity = {
-        id: "custom-" + Date.now(),
-        title: document.getElementById('admin-title').value,
-        subtitle: document.getElementById('admin-subtitle').value,
-        icon: "fa-solid fa-star", // Default icon for custom
-        image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?auto=format&fit=crop&q=80&w=1000",
-        audioFile: null, // Will default to TTS since no API is connected
-        text: document.getElementById('admin-text').value.split('\n').filter(p => p.trim() !== '')
-    };
+    if (openAdminBtn) {
+        openAdminBtn.addEventListener('click', () => {
+            const password = prompt("Enter Admin Password:");
+            if (password === "Lodewijk") {
+                adminPortal.classList.add('active');
+            } else {
+                alert("Incorrect password.");
+            }
+        });
+    }
 
-    activities.push(newActivity);
-    localStorage.setItem('flagshipActivities', JSON.stringify(activities));
-    
-    adminForm.reset();
-    adminPortal.classList.remove('active');
-    renderList();
-    alert("Activity Added! Since you do not have an MP3, the system will read it using Text-to-Speech.");
-});
+    if (closeAdminBtn) {
+        closeAdminBtn.addEventListener('click', () => {
+            adminPortal.classList.remove('active');
+        });
+    }
 
-resetDataBtn.addEventListener('click', () => {
-    localStorage.removeItem('flagshipActivities');
-    activities = defaultActivities;
-    renderList();
-    adminPortal.classList.remove('active');
+    if (adminForm) {
+        adminForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const newActivity = {
+                id: "custom-" + Date.now(),
+                title: document.getElementById('admin-title').value,
+                subtitle: document.getElementById('admin-subtitle').value,
+                icon: "fa-solid fa-star",
+                image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?auto=format&fit=crop&q=80&w=1000",
+                audioFile: null, 
+                completed: false, // CRITICAL: Fixes progress tracker crash
+                text: document.getElementById('admin-text').value.split('\n').filter(p => p.trim() !== '')
+            };
+
+            activities.push(newActivity);
+            localStorage.setItem('flagshipActivities', JSON.stringify(activities));
+            
+            adminForm.reset();
+            adminPortal.classList.remove('active');
+            renderList();
+            alert("Activity Added! Since you do not have an MP3, the system will read it using Text-to-Speech.");
+        });
+    }
+
+    if (resetDataBtn) {
+        resetDataBtn.addEventListener('click', () => {
+            if(confirm("Are you sure you want to reset to default data?")) {
+                localStorage.removeItem('flagshipActivities');
+                activities = [...defaultActivities];
+                renderList();
+                adminPortal.classList.remove('active');
+            }
+        });
+    }
 });
 
 // Event Listeners
@@ -348,3 +450,23 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.addEventListener('click', initAudio, { once: true });
     renderList();
 });
+
+// Add a global language state (defaulting to English)
+let currentLanguage = 'en-US'; 
+
+// Update your fallbackToTTS function
+function fallbackToTTS(autoplay) {
+    currentActivityHasMp3 = false;
+    const wordCount = fullScriptToRead.split(' ').length;
+    estimatedDuration = (wordCount / 130) * 60; 
+    audioDuration.innerText = formatTime(estimatedDuration);
+    
+    // Web Speech API language handling
+    const utterance = new SpeechSynthesisUtterance(fullScriptToRead);
+    utterance.lang = currentLanguage; 
+    
+    // Optional: Auto-translate text using a pre-mapped dictionary or external API here
+    // before passing to the utterance if utilizing non-English voices.
+
+    if (autoplay) toggleAudio();
+}
