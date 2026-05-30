@@ -3,7 +3,7 @@
 const defaultActivities = [
     {
         id: "intro", title: "Start of the Tour", subtitle: "Safety & Guidelines", icon: "fa-solid fa-flag-checkered", 
-        image: "https://images.unsplash.com/photo-1527008102375-b3eb2225e365?auto=format&fit=crop&q=80&w=1000",
+        image: "https://en.wikipedia.org/wiki/Special:FilePath/Damrak_Amsterdam.JPG",
         audioFile: "intro.mp3", 
         completed: false,
         text: [
@@ -15,7 +15,7 @@ const defaultActivities = [
     },
     {
         id: "voc", title: "History VOC", subtitle: "The 17th Century Economic Boom", icon: "fa-solid fa-ship", 
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Amsterdam_-_VOC-schip_Amsterdam.jpg/1024px-Amsterdam_-_VOC-schip_Amsterdam.jpg",
+        image: "https://en.wikipedia.org/wiki/Special:FilePath/Amsterdam_-_VOC-schip_Amsterdam.jpg",
         audioFile: "VOC.mp3",
         completed: false,
         text: [
@@ -30,7 +30,7 @@ const defaultActivities = [
     },
     {
         id: "canals", title: "Canals", subtitle: "Amsterdam’s Historic Waterways", icon: "fa-solid fa-water", 
-        image: "https://images.unsplash.com/photo-1517737841315-62d2ea7f6eb0?auto=format&fit=crop&q=80&w=1000",
+        image: "https://en.wikipedia.org/wiki/Special:FilePath/Prinsengracht.jpg",
         audioFile: "grachtengordel.mp3",
         completed: false,
         text: [
@@ -43,7 +43,7 @@ const defaultActivities = [
     },
     {
         id: "houseboats", title: "House Boats", subtitle: "Living on the Water", icon: "fa-solid fa-anchor", 
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Houseboats_in_Amsterdam_-_51759656111.jpg/1024px-Houseboats_in_Amsterdam_-_51759656111.jpg",
+        image: "https://en.wikipedia.org/wiki/Special:FilePath/Houseboats_in_Amsterdam.jpg",
         audioFile: "houseboats.mp3",
         completed: false,
         text: [
@@ -56,7 +56,7 @@ const defaultActivities = [
     },
     {
         id: "dancing", title: "Dancing Houses", subtitle: "Subsidence & Engineering", icon: "fa-solid fa-building", 
-        image: "https://images.unsplash.com/photo-1574519914755-90117dcf49b3?auto=format&fit=crop&q=80&w=1000",
+        image: "https://en.wikipedia.org/wiki/Special:FilePath/Damrak_Amsterdam.JPG",
         audioFile: "dancing_houses.mp3",
         completed: false,
         text: [
@@ -68,7 +68,7 @@ const defaultActivities = [
     },
     {
         id: "anne-frank", title: "Anne Frank House", subtitle: "A Story of Resilience", icon: "fa-solid fa-book", 
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Anne_Frank_House_-_Amsterdam.jpg/1024px-Anne_Frank_House_-_Amsterdam.jpg",
+        image: "https://en.wikipedia.org/wiki/Special:FilePath/Anne_Frank_House_-_Amsterdam.jpg",
         audioFile: "anne_frank.mp3",
         completed: false,
         text: [
@@ -82,7 +82,7 @@ const defaultActivities = [
     },
     {
         id: "jordaan", title: "Jordaan", subtitle: "Working-Class Roots", icon: "fa-solid fa-map", 
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Jordaan%2C_Amsterdam%2C_Netherlands_-_panoramio_%2834%29.jpg/1024px-Jordaan%2C_Amsterdam%2C_Netherlands_-_panoramio_%2834%29.jpg",
+        image: "https://en.wikipedia.org/wiki/Special:FilePath/Egelantiersgracht_Amsterdam.jpg",
         audioFile: "jordaan.mp3",
         completed: false,
         text: [
@@ -95,7 +95,7 @@ const defaultActivities = [
     },
     {
         id: "westerkerk", title: "Westerkerk", subtitle: "Amsterdam's Highest Tower", icon: "fa-solid fa-church", 
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Westerkerk_Amsterdam.jpg/1024px-Westerkerk_Amsterdam.jpg",
+        image: "https://en.wikipedia.org/wiki/Special:FilePath/Westerkerk_Amsterdam.jpg",
         audioFile: "westerkerk.mp3",
         completed: false,
         text: [
@@ -107,7 +107,7 @@ const defaultActivities = [
     },
     {
         id: "leidseplein", title: "Leidse Square", subtitle: "The Entertainment Epicenter", icon: "fa-solid fa-ticket", 
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Leidseplein_Amsterdam_2019.jpg/1024px-Leidseplein_Amsterdam_2019.jpg",
+        image: "https://en.wikipedia.org/wiki/Special:FilePath/Leidseplein_Amsterdam.jpg",
         audioFile: "leidseplein.mp3",
         completed: false,
         text: [
@@ -119,7 +119,7 @@ const defaultActivities = [
     },
     {
         id: "vondelpark", title: "Vondelpark", subtitle: "Amsterdam's Backyard", icon: "fa-solid fa-tree", 
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Vondelpark_Amsterdam.jpg/1024px-Vondelpark_Amsterdam.jpg",
+        image: "https://en.wikipedia.org/wiki/Special:FilePath/Vondelpark_Amsterdam.jpg",
         audioFile: "vondelpark.mp3",
         completed: false,
         text: [
@@ -132,7 +132,7 @@ const defaultActivities = [
     },
     {
         id: "museumplein", title: "Museum Square", subtitle: "A Cultural Hub", icon: "fa-solid fa-building-columns", 
-        image: "https://images.unsplash.com/photo-1578500213812-706b83f3ee8b?auto=format&fit=crop&q=80&w=1000",
+        image: "https://en.wikipedia.org/wiki/Special:FilePath/Museumplein_amsterdam.jpg",
         audioFile: "museumplein.mp3",
         completed: false,
         text: [
@@ -144,7 +144,7 @@ const defaultActivities = [
     },
     {
         id: "dam-square", title: "Dam Square", subtitle: "The Heart of the City", icon: "fa-solid fa-landmark", 
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Royal_Palace_of_Amsterdam.jpg/1024px-Royal_Palace_of_Amsterdam.jpg",
+        image: "https://en.wikipedia.org/wiki/Special:FilePath/Royal_palace_of_amsterdam.jpg",
         audioFile: "Damsquare.mp3",
         completed: false,
         text: [
@@ -156,7 +156,7 @@ const defaultActivities = [
     },
     {
         id: "bicycles", title: "Bicycles", subtitle: "The Cycling Capital", icon: "fa-solid fa-bicycle", 
-        image: "https://images.unsplash.com/photo-1563290616-e41c4da9cb1f?auto=format&fit=crop&q=80&w=1000",
+        image: "https://en.wikipedia.org/wiki/Special:FilePath/Amsterdam_Bicycles.jpg",
         audioFile: "bicycles.mp3",
         completed: false,
         text: [
@@ -168,7 +168,7 @@ const defaultActivities = [
     },
     {
         id: "three-crosses", title: "The Three Crosses", subtitle: "Amsterdam's Coat of Arms (XXX)", icon: "fa-solid fa-shield-halved", 
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Amsterdammertje.jpg/1024px-Amsterdammertje.jpg",
+        image: "https://en.wikipedia.org/wiki/Special:FilePath/Amsterdammertje.jpg",
         audioFile: "three_crosses.mp3",
         completed: false,
         text: [

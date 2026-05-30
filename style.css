@@ -27,20 +27,12 @@ h1, h2, h3 { font-family: 'Poppins', sans-serif; }
 .header-logo { 
     display: flex; 
     align-items: center; 
-    justify-content: flex-start;
-    height: 50px; 
-    width: 220px; /* Constrains the crop area */
-    overflow: hidden; /* Hides the overflowing orange background */
-    position: relative;
+    height: 44px; 
 }
 .brand-logo {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%) scale(2.8); /* Blows up the SVG to push empty space out of bounds */
-    transform-origin: left center;
-    width: 100%;
-    height: auto;
+    height: 100%;
+    width: auto;
+    object-fit: contain;
 }
 .admin-toggle { 
     background: transparent; 
