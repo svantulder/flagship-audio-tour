@@ -33,7 +33,6 @@ h1, h2, h3 { font-family: 'Poppins', sans-serif; }
     height: 100%;
     width: auto;
     object-fit: contain;
-    filter: brightness(0) invert(1); /* Forces the SVG to white for contrast against the orange background */
 }
 .admin-toggle { 
     background: transparent; 

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ff6600">
+</head> 
 <body>
 
     <header class="app-header">
@@ -82,13 +83,14 @@
     </div>
 
     <div id="drawer-backdrop" class="drawer-backdrop"></div>
-
+   
     <script src="app.js"></script>
    
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
+                // Fixed path: Added a dot to make it relative to the current folder
+                navigator.serviceWorker.register('./sw.js')
                     .then(registration => {
                         console.log('ServiceWorker registration successful with scope: ', registration.scope);
                     })
