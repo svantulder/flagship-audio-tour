@@ -2,7 +2,7 @@
     --bg-color: #f8f9fa; 
     --text-primary: #0a192f; 
     --text-secondary: #4a5568;
-    --accent: #ff6600; 
+    --accent: #fa7c00; 
     --accent-light: #fff0e6; 
     --glass-bg: rgba(255, 255, 255, 0.95);
     --glass-border: rgba(0, 0, 0, 0.05);
@@ -16,7 +16,7 @@ h1, h2, h3 { font-family: 'Poppins', sans-serif; }
 .app-header {
     background: var(--accent); 
     padding: 1rem 1.5rem; 
-    box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(250, 124, 0, 0.3); /* Updated to match #fa7c00 */
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
@@ -27,12 +27,20 @@ h1, h2, h3 { font-family: 'Poppins', sans-serif; }
 .header-logo { 
     display: flex; 
     align-items: center; 
-    height: 44px; /* Constrains the SVG to a functional mobile height */
+    justify-content: flex-start;
+    height: 50px; 
+    width: 220px; /* Constrains the crop area */
+    overflow: hidden; /* Hides the overflowing orange background */
+    position: relative;
 }
 .brand-logo {
-    height: 100%;
-    width: auto;
-    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%) scale(2.8); /* Blows up the SVG to push empty space out of bounds */
+    transform-origin: left center;
+    width: 100%;
+    height: auto;
 }
 .admin-toggle { 
     background: transparent; 

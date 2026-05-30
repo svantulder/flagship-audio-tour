@@ -4,7 +4,7 @@ const defaultActivities = [
     {
         id: "intro", title: "Start of the Tour", subtitle: "Safety & Guidelines", icon: "fa-solid fa-flag-checkered", 
         image: "https://images.unsplash.com/photo-1527008102375-b3eb2225e365?auto=format&fit=crop&q=80&w=1000",
-        audioFile: null, 
+        audioFile: "intro.mp3", 
         completed: false,
         text: [
             "Hi everyone! Welcome to Flagship Bike Tours Amsterdam—I’m your guide for today’s adventure.", 
