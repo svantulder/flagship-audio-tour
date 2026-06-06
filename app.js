@@ -24,7 +24,7 @@ window.addEventListener('scroll', () => {
 // --- 2. Supabase Setup & Routing ---
 const SUPABASE_URL = 'https://yevfkqblgovvnmueoufw.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_9s6sR6tS6IkVg3hrmSgTzg_iHCF19OX';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const urlParams = new URLSearchParams(window.location.search);
 const activeTourId = urlParams.get('tour');
@@ -41,7 +41,7 @@ async function fetchTourData() {
     }
 
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('stops')
             .select(`
                 id,
