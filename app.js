@@ -1,4 +1,29 @@
-// Base Data with Deep-Dive Narrative Texts and specific MP3 filenames
+let lastScrollTop = 0;
+const header = document.querySelector('.app-header');
+
+window.addEventListener('scroll', () => {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Ignore bounce scrolling at the very top
+    if (scrollTop <= 0) {
+        header.classList.remove('scroll-up');
+        header.classList.remove('scroll-down');
+        lastScrollTop = scrollTop;
+        return;
+    }
+
+    if (scrollTop > lastScrollTop && scrollTop > 64) {
+        // Scrolling down past header height
+        header.classList.remove('scroll-up');
+        header.classList.add('scroll-down');
+    } else {
+        // Scrolling up
+        header.classList.remove('scroll-down');
+        header.classList.add('scroll-up');
+    }
+    lastScrollTop = scrollTop;
+}, { passive: true });
+
 // Base Data with Deep-Dive Narrative Texts, specific MP3 filenames, and accurate location photography
 const defaultActivities = [
     {
