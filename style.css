@@ -136,8 +136,20 @@ body {
     border-radius: 50%; width: 36px; height: 36px; font-size: 1.2rem; cursor: pointer; backdrop-filter: blur(4px);
 }
 
-.drawer-content { padding: 0 1.5rem 1.5rem 1.5rem; flex-grow: 1; overflow-y: hidden; display: flex; flex-direction: column; }
-.player-title-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-shrink: 0; z-index: 2; margin-top: -20px; }
+.drawer-content { padding: 0 1.5rem 1.5rem 1.5rem; flex-grow: 1; overflow-y: visible; display: flex; flex-direction: column; }
+
+.player-title-row {
+    
+    display: flex; 
+    align-items: center; 
+    gap: 1rem; 
+    margin-bottom: 1.5rem; 
+    flex-shrink: 0; 
+    z-index: 10; /* Boosted just to be safe */
+    margin-top: -20px; 
+    position: relative; /* CRITICAL FIX: Activates the z-index */
+} 
+
 .player-title-row h2 { font-size: 1.5rem; }
 
 .audio-player-card {
@@ -160,6 +172,7 @@ body {
 .drawer-backdrop {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4);
     opacity: 0; pointer-events: none; transition: opacity 0.4s ease; z-index: 999;
+    z-index: 2000;
 }
 .drawer-backdrop.active { opacity: 1; pointer-events: auto; }
 
@@ -236,6 +249,7 @@ body {
         width: 500px !important;
         left: 50% !important;
         transform: translate(-50%, 100%);
+        z-index: 2001;
     }
     .bottom-drawer.active {
         transform: translate(-50%, 0);

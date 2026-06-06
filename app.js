@@ -24,6 +24,85 @@ window.addEventListener('scroll', () => {
     lastScrollTop = scrollTop;
 }, { passive: true });
 
+// 1. Initialize Supabase Client
+const SUPABASE_URL = 'https://yevfkqblgovvnmueoufw.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_9s6sR6tS6IkVg3hrmSgTzg_iHCF19OX';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// 2. Extract URL Parameters (e.g., ?tour=city-center&lang=en)
+const urlParams = new URLSearchParams(window.location.search);
+const activeTourId = urlParams.get('tour');
+const activeLang = urlParams.get('lang') || 'en';
+
+let activities = [];
+
+// 3. Fetch Data on Load
+async function fetchTourData() {
+    if (!activeTourId) {
+        renderErrorState("No tour selected. Please scan a valid QR code.");
+        return;
+    }
+
+    try {
+        // We join the stops and stop_translations tables based on the requested tour and language
+        const { data, error } = await supabase
+            .from('stops')
+            .select(`
+                id,
+                order_index,
+                icon,
+                image_url,
+                stop_translations!inner(
+                    title,
+                    subtitle,
+                    script_text,
+                    audio_url
+                )
+            `)
+            .eq('tour_id', activeTourId)
+            .eq('stop_translations.lang', activeLang)
+            .order('order_index', { ascending: true });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            renderErrorState("Tour or language not found.");
+            return;
+        }
+
+        // 4. Map database structure back to your app's expected format
+        activities = data.map(stop => ({
+            id: stop.id,
+            title: stop.stop_translations[0].title,
+            subtitle: stop.stop_translations[0].subtitle,
+            icon: stop.icon,
+            image: stop.image_url,
+            audioFile: stop.stop_translations[0].audio_url,
+            text: stop.stop_translations[0].script_text,
+            completed: false
+        }));
+
+        renderList();
+        
+        // Hide a loading spinner here if you added one
+
+    } catch (err) {
+        console.error("Error fetching tour:", err);
+        renderErrorState("Failed to load tour data. Check your connection.");
+    }
+}
+
+function renderErrorState(message) {
+    const list = document.getElementById('activity-list');
+    if(list) list.innerHTML = `<div style="text-align:center; padding: 2rem; color: #4a5568;">${message}</div>`;
+}
+
+// Replace your existing DOMContentLoaded listener
+document.addEventListener('DOMContentLoaded', () => {
+    document.body.addEventListener('click', initAudio, { once: true });
+    fetchTourData(); // Trigger the database call
+});
+
 // Base Data with Deep-Dive Narrative Texts, specific MP3 filenames, and accurate location photography
 const defaultActivities = [
     {
@@ -207,7 +286,7 @@ const defaultActivities = [
 ];
 
 // Load from CMS (localStorage) or use defaults
-let activities = JSON.parse(localStorage.getItem('flagshipActivities')) || defaultActivities;
+// let activities = JSON.parse(localStorage.getItem('flagshipActivities')) || defaultActivities;
 
 // DOM Elements
 const activityList = document.getElementById('activity-list');
