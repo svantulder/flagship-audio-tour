@@ -156,7 +156,16 @@ function stopAudio() {
     audioCurrent.innerText = "0:00";
 }
 
-audioSlider.addEventListener('input', (e) => {
+// --- START REPLACEMENT (app.js) ---
+let isScrubbing = false;
+
+// Stop timer from updating slider while user is dragging
+audioSlider.addEventListener('mousedown', () => isScrubbing = true);
+audioSlider.addEventListener('touchstart', () => isScrubbing = true, {passive: true});
+
+// Only change the actual audio time when the user lets go
+audioSlider.addEventListener('change', (e) => {
+    isScrubbing = false;
     const seekTime = (e.target.value / 100) * estimatedDuration;
     if (currentActivityHasMp3) {
         nativeAudio.currentTime = seekTime;
@@ -165,12 +174,18 @@ audioSlider.addEventListener('input', (e) => {
     }
 });
 
+// Update the text time immediately while dragging, but don't touch the audio yet
+audioSlider.addEventListener('input', (e) => {
+    const seekTime = (e.target.value / 100) * estimatedDuration;
+    audioCurrent.innerText = formatTime(seekTime);
+});
+
 document.getElementById('skip-back-btn').addEventListener('click', () => {
-    if (currentActivityHasMp3) nativeAudio.currentTime = Math.max(0, nativeAudio.currentTime - 5);
+    if (currentActivityHasMp3) nativeAudio.currentTime = Math.max(0, nativeAudio.currentTime - 15); // Changed to 15s for better UX
 });
 
 document.getElementById('skip-fwd-btn').addEventListener('click', () => {
-    if (currentActivityHasMp3) nativeAudio.currentTime = Math.min(estimatedDuration, nativeAudio.currentTime + 5);
+    if (currentActivityHasMp3) nativeAudio.currentTime = Math.min(estimatedDuration, nativeAudio.currentTime + 15);
 });
 
 function toggleAudio() {
@@ -197,16 +212,20 @@ function toggleAudio() {
         
         audioTimer = setInterval(() => {
             currentAudioTime = currentActivityHasMp3 ? nativeAudio.currentTime : currentAudioTime + 0.1;
-            audioCurrent.innerText = formatTime(currentAudioTime);
-            audioSlider.value = (currentAudioTime / estimatedDuration) * 100;
+            
+            // Only update the UI if the user IS NOT actively dragging the slider
+            if (!isScrubbing) {
+                audioCurrent.innerText = formatTime(currentAudioTime);
+                audioSlider.value = (currentAudioTime / estimatedDuration) * 100;
+            }
             
             if (currentAudioTime >= estimatedDuration) {
                 stopAudio();
-                // markActivityComplete(); // Uncomment if you have this function defined
             }
         }, 100);
     }
 }
+// --- END REPLACEMENT ---
 
 function openPlayer(activity, autoplay = false) {
     stopAudio();

@@ -136,7 +136,14 @@ body {
     border-radius: 50%; width: 36px; height: 36px; font-size: 1.2rem; cursor: pointer; backdrop-filter: blur(4px);
 }
 
-.drawer-content { padding: 0 1.5rem 1.5rem 1.5rem; flex-grow: 1; overflow-y: visible; display: flex; flex-direction: column; }
+.drawer-content { 
+    padding: 0 1.5rem 1.5rem 1.5rem; 
+    flex-grow: 1; 
+    overflow-y: hidden; /* Changed from visible to hidden to contain the flex child */
+    display: flex; 
+    flex-direction: column; 
+    min-height: 0; /* Critical for flexbox scrolling down the chain */
+}
 
 .player-title-row {
     
@@ -166,7 +173,14 @@ body {
 .audio-slider { width: 100%; -webkit-appearance: none; appearance: none; background: rgba(0,0,0,0.1); height: 6px; border-radius: 3px; }
 .audio-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); }
 
-.scrollable-text { overflow-y: auto; padding-right: 0.5rem; flex-grow: 1; margin-bottom: 2rem; }
+.scrollable-text { 
+    overflow-y: auto; 
+    padding-right: 0.5rem; 
+    flex-grow: 1; 
+    margin-bottom: 2rem; 
+    -webkit-overflow-scrolling: touch; /* Adds momentum scrolling on iOS */
+    overscroll-behavior-y: contain; /* Stops the background body from scrolling when drawer hits bottom */
+}
 .scrollable-text p { color: var(--text-secondary); line-height: 1.7; margin-top: 0; margin-bottom: 1.2rem; }
 
 .drawer-backdrop {
