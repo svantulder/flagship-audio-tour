@@ -229,6 +229,10 @@ function toggleAudio() {
 
 function openPlayer(activity, autoplay = false) {
     stopAudio();
+    
+    // Prevent background scrolling while drawer is open
+    document.body.style.overflow = 'hidden';
+    
     document.getElementById('player-image').src = activity.image || "https://images.unsplash.com/photo-1524047934617-cb782c24e5f3?auto=format&fit=crop&q=80&w=1000";
     document.getElementById('player-icon').className = activity.icon;
     document.getElementById('player-title').innerText = activity.title;
@@ -262,16 +266,13 @@ function openPlayer(activity, autoplay = false) {
     drawerBackdrop.classList.add('active');
 }
 
-function fallbackToTTS(autoplay) {
-    currentActivityHasMp3 = false;
-    const wordCount = fullScriptToRead.split(' ').length;
-    estimatedDuration = (wordCount / 130) * 60; 
-    audioDuration.innerText = formatTime(estimatedDuration);
-    if (autoplay) toggleAudio();
-}
-
 function closeDrawer() {
-    playerDrawer.classList.remove('active'); drawerBackdrop.classList.remove('active'); stopAudio();
+    // Restore background scrolling when drawer closes
+    document.body.style.overflow = '';
+    
+    playerDrawer.classList.remove('active'); 
+    drawerBackdrop.classList.remove('active'); 
+    stopAudio();
 }
 
 audioToggleBtn.addEventListener('click', toggleAudio);
