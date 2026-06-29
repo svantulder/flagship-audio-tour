@@ -27,18 +27,17 @@ const SUPABASE_KEY = 'sb_publishable_9s6sR6tS6IkVg3hrmSgTzg_iHCF19OX';
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const urlParams = new URLSearchParams(window.location.search);
-const activeTourId = urlParams.get('tour');
 const activeLang = urlParams.get('lang') || 'en';
+
+// Hardcode your single tour ID here (must match the ID in your Supabase 'stops' table)
+const DEFAULT_TOUR_ID = 'your_tour_id_here';
 
 let activities = [];
 
 
 // --- 3. Database Fetching ---
 async function fetchTourData() {
-    if (!activeTourId) {
-        renderErrorState("No tour selected. Please scan a valid QR code.");
-        return;
-    }
+    // REMOVED: if (!activeTourId) { ... }
 
     try {
         const { data, error } = await supabaseClient
@@ -55,7 +54,7 @@ async function fetchTourData() {
                     audio_url
                 )
             `)
-            .eq('tour_id', activeTourId)
+            .eq('tour_id', DEFAULT_TOUR_ID) // Now uses the hardcoded ID
             .eq('stop_translations.lang', activeLang)
             .order('order_index', { ascending: true });
 
@@ -260,10 +259,16 @@ function openPlayer(activity, autoplay = false) {
     descContainer.innerHTML = '';
     fullScriptToRead = "";
     
-    activity.text.forEach(p => {
-        const pEl = document.createElement('p'); pEl.innerText = p;
-        descContainer.appendChild(pEl);
-        fullScriptToRead += p + " ";
+    // Split the string by newlines to create an array of paragraphs
+    const paragraphs = activity.text.split(/\r?\n+/);
+    
+    paragraphs.forEach(p => {
+        if (p.trim() !== "") { // Ignore empty splits
+            const pEl = document.createElement('p'); 
+            pEl.innerText = p.trim();
+            descContainer.appendChild(pEl);
+            fullScriptToRead += p.trim() + " ";
+        }
     });
 
     if (activity.audioFile && activity.audioFile !== "null") {
