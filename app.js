@@ -54,7 +54,7 @@ async function fetchTourData() {
                     audio_url
                 )
             `)
-            .eq('tour_id', DEFAULT_TOUR_ID) // Now uses the hardcoded ID
+            .eq('tour_id', 'city-center') // Now uses the hardcoded ID
             .eq('stop_translations.lang', activeLang)
             .order('order_index', { ascending: true });
 
