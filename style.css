@@ -139,11 +139,10 @@ body {
 .drawer-content { 
     padding: 0 1.5rem 1.5rem 1.5rem; 
     flex-grow: 1; 
-    overflow-y: hidden; 
+    overflow: visible; /* Fixes the clipping */
     display: flex; 
     flex-direction: column; 
     min-height: 0; 
-    /* Add these two lines to establish a dominant stacking context */
     position: relative;
     z-index: 2; 
 }
