@@ -16,7 +16,7 @@
     <div class="hanging-logo-tab">
         <img src="https://flagshipbiketoursamsterdam.com/wp-content/themes/fbt/assets/img/theme/logo-flagship-bike-tours-alt-white.svg" alt="Flagship Bike Tours" class="brand-logo">
     </div>
-    <button id="open-admin-btn" class="admin-toggle"><i class="fa-solid fa-gear"></i></button>
+    <button id="open-lang-btn" class="header-toggle"><i class="fa-solid fa-globe"></i></button>
 </header>
 
     <section class="hero-section">
@@ -65,22 +65,23 @@
         </div>
     </div>
 
-    <div id="admin-portal" class="admin-modal">
-        <div class="admin-header">
-            <h2>Content Management</h2>
-            <button id="close-admin-btn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="admin-content">
-            <p style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--text-secondary);">Add a new activity. Data is saved locally for this POC.</p>
-            <form id="admin-form">
-                <input type="text" id="admin-title" placeholder="Title (e.g., Royal Palace)" required>
-                <input type="text" id="admin-subtitle" placeholder="Subtitle" required>
-                <textarea id="admin-text" placeholder="Audio Script & Text (Paragraphs separated by line breaks)" rows="5" required></textarea>
-                <button type="submit" class="btn-primary" style="margin-top: 1rem;">Save & Generate Content</button>
-            </form>
-            <button id="reset-data-btn" class="btn-secondary" style="margin-top: 2rem; border-color: red; color: red;">Reset to Default Data</button>
-        </div>
+    <div id="language-portal" class="ui-modal">
+    <div class="ui-modal-header">
+        <h2>Select Language</h2>
+        <button id="close-lang-btn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
     </div>
+    <div class="ui-modal-content">
+        <ul class="language-list" id="language-selection-list">
+            <li data-lang="en"><span class="flag">🇬🇧</span> English</li>
+            <li data-lang="fr"><span class="flag">🇫🇷</span> Français (French)</li>
+            <li data-lang="it"><span class="flag">🇮🇹</span> Italiano (Italian)</li>
+            <li data-lang="de"><span class="flag">🇩🇪</span> Deutsch (German)</li>
+            <li data-lang="es"><span class="flag">🇪🇸</span> Español (Spanish)</li>
+            <li data-lang="zh-CN"><span class="flag">🇨🇳</span> 普通话 (Mandarin)</li>
+            <li data-lang="zh-HK"><span class="flag">🇭🇰</span> 粵語 (Cantonese)</li>
+        </ul>
+    </div>
+</div>
 
     <div id="drawer-backdrop" class="drawer-backdrop"></div>
    

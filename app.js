@@ -77,11 +77,32 @@ async function fetchTourData() {
             completed: false
         }));
 
+        // --- NEW LINE ADDED HERE ---
+        cacheTourAssets(activities);
+        
         renderList();
 
     } catch (err) {
         console.error("Error fetching tour:", err);
         renderErrorState("Failed to load tour data. Check your connection.");
+    }
+}
+
+// --- NEW FUNCTION ADDED HERE ---
+async function cacheTourAssets(tourActivities) {
+    if (!('caches' in window)) return;
+    
+    try {
+        const dynamicCache = await caches.open('flagship-dynamic-v1');
+        
+        const urlsToCache = tourActivities
+            .flatMap(act => [act.image, act.audioFile])
+            .filter(url => url && url !== "null" && url !== "");
+
+        await dynamicCache.addAll(urlsToCache);
+        console.log("Tour assets successfully cached for offline use.");
+    } catch (err) {
+        console.error("Failed to cache some dynamic assets:", err);
     }
 }
 
@@ -156,7 +177,6 @@ function stopAudio() {
     audioCurrent.innerText = "0:00";
 }
 
-// --- START REPLACEMENT (app.js) ---
 let isScrubbing = false;
 
 // Stop timer from updating slider while user is dragging
@@ -225,7 +245,6 @@ function toggleAudio() {
         }, 100);
     }
 }
-// --- END REPLACEMENT ---
 
 function openPlayer(activity, autoplay = false) {
     stopAudio();
@@ -285,4 +304,36 @@ drawerBackdrop.addEventListener('click', closeDrawer);
 document.addEventListener('DOMContentLoaded', () => {
     document.body.addEventListener('click', initAudio, { once: true });
     fetchTourData(); 
+});
+
+// --- 7. Language Switcher Logic ---
+const langPortal = document.getElementById('language-portal');
+const openLangBtn = document.getElementById('open-lang-btn');
+const closeLangBtn = document.getElementById('close-lang-btn');
+const langItems = document.querySelectorAll('#language-selection-list li');
+
+openLangBtn.addEventListener('click', () => {
+    langPortal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+});
+
+closeLangBtn.addEventListener('click', () => {
+    langPortal.classList.remove('active');
+    document.body.style.overflow = '';
+});
+
+langItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+        const selectedLang = e.currentTarget.getAttribute('data-lang');
+        if (selectedLang === activeLang) {
+            // If they pick the language they are already on, just close it
+            closeLangBtn.click();
+            return;
+        }
+        
+        // Update URL parameter and reload
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('lang', selectedLang);
+        window.location.href = currentUrl.toString();
+    });
 });
