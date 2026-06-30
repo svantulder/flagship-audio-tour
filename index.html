@@ -93,18 +93,32 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                // Fixed path: Added a dot to make it relative to the current folder
-                navigator.serviceWorker.register('./sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('ServiceWorker registration failed: ', error);
+                navigator.serviceWorker.register('./sw.js').then(reg => {
+                    console.log('ServiceWorker registration successful');
+                    
+                    // Listen for updates to the service worker
+                    reg.addEventListener('updatefound', () => {
+                        const newWorker = reg.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                // A new version is available. Force it to activate.
+                                newWorker.postMessage({ type: 'SKIP_WAITING' });
+                            }
+                        });
                     });
+                }).catch(error => {
+                    console.log('ServiceWorker registration failed: ', error);
+                });
+
+                // Reload the page once the new service worker takes control
+                let refreshing;
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    if (refreshing) return;
+                    window.location.reload();
+                    refreshing = true;
+                });
             });
         }
     </script>
-</body>
-</html>
 </body>
 </html>

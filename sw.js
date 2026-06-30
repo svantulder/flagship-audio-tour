@@ -64,3 +64,10 @@ self.addEventListener('fetch', event => {
         })
     );
 });
+
+// 4. Message Event: Force the waiting service worker to become active
+self.addEventListener('message', event => {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
+});

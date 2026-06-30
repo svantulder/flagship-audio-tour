@@ -317,23 +317,44 @@ function openPlayer(activity, autoplay = false) {
     });
 
     if (activity.audioFile && activity.audioFile !== "null") {
-        currentActivityHasMp3 = true;
-        nativeAudio.src = activity.audioFile;
-        nativeAudio.onloadedmetadata = () => {
-            estimatedDuration = nativeAudio.duration;
-            audioDuration.innerText = formatTime(estimatedDuration);
-            if (autoplay) toggleAudio();
-        };
-        nativeAudio.onerror = () => {
+            currentActivityHasMp3 = true;
+            nativeAudio.src = activity.audioFile;
+            nativeAudio.onloadedmetadata = () => {
+                estimatedDuration = nativeAudio.duration;
+                audioDuration.innerText = formatTime(estimatedDuration);
+                if (autoplay) toggleAudio();
+            };
+            nativeAudio.onerror = () => {
+                fallbackToTTS(autoplay);
+            };
+        } else {
             fallbackToTTS(autoplay);
-        };
-    } else {
-        fallbackToTTS(autoplay);
-    }
+        }
 
-    playerDrawer.classList.add('active');
-    drawerBackdrop.classList.add('active');
-}
+        // --- NEW POCKET MEDIA CONTROL LOGIC ---
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: activity.title,
+                artist: 'Flagship Discovery Tour',
+                artwork: [
+                    { src: activity.image || 'default-icon.png', sizes: '512x512', type: 'image/jpeg' }
+                ]
+            });
+
+            navigator.mediaSession.setActionHandler('play', toggleAudio);
+            navigator.mediaSession.setActionHandler('pause', toggleAudio);
+            navigator.mediaSession.setActionHandler('seekbackward', () => {
+                if (currentActivityHasMp3) nativeAudio.currentTime = Math.max(0, nativeAudio.currentTime - 15);
+            });
+            navigator.mediaSession.setActionHandler('seekforward', () => {
+                if (currentActivityHasMp3) nativeAudio.currentTime = Math.min(estimatedDuration, nativeAudio.currentTime + 15);
+            });
+        }
+        // --------------------------------------
+
+        playerDrawer.classList.add('active');
+        drawerBackdrop.classList.add('active');
+    }
 
 function closeDrawer() {
     // Restore background scrolling when drawer closes
