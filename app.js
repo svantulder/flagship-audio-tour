@@ -182,6 +182,7 @@ const audioSlider = document.getElementById('audio-slider');
 let audioTimer, isPlaying = false, currentAudioTime = 0, estimatedDuration = 0, fullScriptToRead = "", speechSynthesisActive = false;
 let nativeAudio = new Audio();
 let currentActivityHasMp3 = false;
+let currentPlayingActivity = null;
 
 function initAudio() {
     if (!speechSynthesisActive && 'speechSynthesis' in window) {
@@ -271,6 +272,18 @@ function toggleAudio() {
             
             if (currentAudioTime >= estimatedDuration) {
                 stopAudio();
+                
+                if (currentPlayingActivity && !currentPlayingActivity.completed) {
+                    currentPlayingActivity.completed = true;
+                    
+                    const completedIds = JSON.parse(localStorage.getItem('completedStops') || '[]');
+                    if (!completedIds.includes(currentPlayingActivity.id)) {
+                        completedIds.push(currentPlayingActivity.id);
+                        localStorage.setItem('completedStops', JSON.stringify(completedIds));
+                    }
+                    
+                    renderList();
+                }
             }
         }, 100);
     }
@@ -278,6 +291,7 @@ function toggleAudio() {
 
 function openPlayer(activity, autoplay = false) {
     stopAudio();
+    currentPlayingActivity = activity; // <-- ADDED HERE
     
     // Prevent background scrolling while drawer is open
     document.body.style.overflow = 'hidden';
