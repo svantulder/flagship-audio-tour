@@ -29,15 +29,21 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const urlParams = new URLSearchParams(window.location.search);
 const activeLang = urlParams.get('lang') || 'en';
 
+const langFlags = {
+    'en': '🇬🇧', 'fr': '🇫🇷', 'it': '🇮🇹', 'de': '🇩🇪', 
+    'es': '🇪🇸', 'zh-CN': '🇨🇳', 'zh-HK': '🇭🇰'
+};
+
 // Hardcode your single tour ID here (must match the ID in your Supabase 'stops' table)
-const DEFAULT_TOUR_ID = 'your_tour_id_here';
+const DEFAULT_TOUR_ID = 'city-center';
 
 let activities = [];
 
 
 // --- 3. Database Fetching ---
 async function fetchTourData() {
-    // REMOVED: if (!activeTourId) { ... }
+    // Inject loader before the fetch begins
+    document.getElementById('activity-list').innerHTML = '<div style="text-align:center; padding: 3rem; color: #4a5568;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem; color: #fa7c00;"></i><br>Loading tour...</div>';
 
     try {
         const { data, error } = await supabaseClient
@@ -65,6 +71,10 @@ async function fetchTourData() {
             return;
         }
 
+        localStorage.setItem(`tourData_${activeLang}`, JSON.stringify(data));
+
+        const completedIds = JSON.parse(localStorage.getItem('completedStops') || '[]');
+
         activities = data.map(stop => ({
             id: stop.id,
             title: stop.stop_translations[0].title,
@@ -73,7 +83,7 @@ async function fetchTourData() {
             image: stop.image_url,
             audioFile: stop.stop_translations[0].audio_url,
             text: stop.stop_translations[0].script_text,
-            completed: false
+            completed: completedIds.includes(stop.id) // Check if ID is in storage
         }));
 
         // --- NEW LINE ADDED HERE ---
@@ -83,7 +93,28 @@ async function fetchTourData() {
 
     } catch (err) {
         console.error("Error fetching tour:", err);
-        renderErrorState("Failed to load tour data. Check your connection.");
+        const cachedData = localStorage.getItem(`tourData_${activeLang}`);
+        
+        if (cachedData) {
+            console.log("Network failed. Falling back to cached tour data.");
+            const data = JSON.parse(cachedData);
+            
+            activities = data.map(stop => ({
+                id: stop.id,
+                title: stop.stop_translations[0].title,
+                subtitle: stop.stop_translations[0].subtitle,
+                icon: stop.icon,
+                image: stop.image_url,
+                audioFile: stop.stop_translations[0].audio_url,
+                text: stop.stop_translations[0].script_text,
+                completed: false
+            }));
+            
+            renderList();
+        } else {
+            // If there is no cache and the network fails, then show the error
+            renderErrorState("Failed to load tour data. Check your connection.");
+        }
     }
 }
 
@@ -305,8 +336,9 @@ drawerBackdrop.addEventListener('click', closeDrawer);
 
 
 // --- 6. Initialization ---
-// ONLY ONE DOMContentLoaded LISTENER ALLOWED
 document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('current-lang-flag').innerText = langFlags[activeLang] || '🌍';
+    
     document.body.addEventListener('click', initAudio, { once: true });
     fetchTourData(); 
 });
