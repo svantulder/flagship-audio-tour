@@ -479,3 +479,4 @@ langItems.forEach(item => {
         window.location.href = currentUrl.toString();
     });
 });
+
