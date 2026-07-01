@@ -118,22 +118,58 @@ async function fetchTourData() {
     }
 }
 
-// --- NEW FUNCTION ADDED HERE ---
 async function cacheTourAssets(tourActivities) {
     if (!('caches' in window)) return;
     
-    try {
-        const dynamicCache = await caches.open('flagship-dynamic-v1');
-        
-        const urlsToCache = tourActivities
-            .flatMap(act => [act.image, act.audioFile])
-            .filter(url => url && url !== "null" && url !== "");
+    const urlsToCache = tourActivities
+        .flatMap(act => [act.image, act.audioFile])
+        .filter(url => url && url !== "null" && url !== "");
 
-        await dynamicCache.addAll(urlsToCache);
-        console.log("Tour assets successfully cached for offline use.");
-    } catch (err) {
-        console.error("Failed to cache some dynamic assets:", err);
+    if (urlsToCache.length === 0) return;
+
+    const dynamicCache = await caches.open('flagship-dynamic-v1');
+    const overlay = document.getElementById('download-overlay');
+    const progressFill = document.getElementById('download-progress-fill');
+    const statusText = document.getElementById('download-status-text');
+
+    // Check if we actually need to download anything by looking at the cache keys
+    const existingRequests = await dynamicCache.keys();
+    const existingUrls = existingRequests.map(req => req.url);
+    
+    const missingUrls = urlsToCache.filter(url => !existingUrls.includes(url));
+
+    // If everything is already cached, skip the download screen
+    if (missingUrls.length === 0) {
+        console.log("All assets already cached.");
+        return;
     }
+
+    // Show the overlay
+    overlay.classList.add('active');
+    
+    let downloadedCount = 0;
+    const totalFiles = missingUrls.length;
+
+    for (const url of missingUrls) {
+        try {
+            const response = await fetch(url, { mode: 'cors' });
+            if (response.ok) {
+                await dynamicCache.put(url, response.clone());
+            }
+        } catch (err) {
+            console.error(`Failed to cache ${url}:`, err);
+        } finally {
+            downloadedCount++;
+            const percent = (downloadedCount / totalFiles) * 100;
+            progressFill.style.width = `${percent}%`;
+            statusText.innerText = `${downloadedCount} / ${totalFiles} Files`;
+        }
+    }
+
+    // Hide overlay after a brief pause so they see 100%
+    setTimeout(() => {
+        overlay.classList.remove('active');
+    }, 800);
 }
 
 

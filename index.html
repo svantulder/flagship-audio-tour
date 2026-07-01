@@ -86,6 +86,17 @@
 </div>
 
     <div id="drawer-backdrop" class="drawer-backdrop"></div>
+
+    <div id="download-overlay" class="ui-modal">
+    <div class="ui-modal-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 100%;">
+        <h2 style="margin-bottom: 1rem;">Downloading Tour...</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;">Please stay on Wi-Fi until the download is complete.</p>
+        <div class="progress-bar-bg" style="width: 100%; max-width: 300px; height: 12px;">
+            <div id="download-progress-fill" class="progress-bar-fill" style="width: 0%;"></div>
+        </div>
+        <div id="download-status-text" class="progress-text" style="margin-top: 1rem;">0 / 0 Files</div>
+    </div>
+</div>
    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="app.js"></script>
