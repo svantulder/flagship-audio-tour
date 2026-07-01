@@ -150,19 +150,53 @@ async function cacheTourAssets(tourActivities) {
     let downloadedCount = 0;
     const totalFiles = missingUrls.length;
 
+    // --- NEW: Pre-flight Storage Check ---
+    if (navigator.storage && navigator.storage.estimate) {
+        try {
+            const estimation = await navigator.storage.estimate();
+            const availableMB = (estimation.quota - estimation.usage) / (1024 * 1024);
+            
+            // If less than 50MB is available, warn the user immediately
+            if (availableMB < 50) {
+                statusText.innerText = "Warning: Device storage is almost full. Audio may not play offline.";
+                statusText.style.color = "#ef4444"; // Red text for warning
+                await new Promise(resolve => setTimeout(resolve, 3000)); // Pause so they read it
+            }
+        } catch (e) {
+            console.warn("Storage estimation failed, proceeding blindly.");
+        }
+    }
+    // -------------------------------------
+
     for (const url of missingUrls) {
         try {
             const response = await fetch(url, { mode: 'cors' });
-            if (response.ok) {
-                await dynamicCache.put(url, response.clone());
-            }
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            
+            await dynamicCache.put(url, response.clone());
         } catch (err) {
+            // --- NEW: Explicit Quota Handling ---
+            if (err.name === 'QuotaExceededError') {
+                console.warn('Storage quota exceeded. Halting downloads.');
+                
+                statusText.innerText = `Storage Full. Downloaded ${downloadedCount} of ${totalFiles} files.`;
+                statusText.style.color = "#ef4444";
+                
+                // Keep the overlay open slightly longer so they understand the failure
+                setTimeout(() => { overlay.classList.remove('active'); }, 4000);
+                
+                break; // Exit the loop entirely
+            }
+            // ------------------------------------
+            
             console.error(`Failed to cache ${url}:`, err);
         } finally {
             downloadedCount++;
-            const percent = (downloadedCount / totalFiles) * 100;
-            progressFill.style.width = `${percent}%`;
-            statusText.innerText = `${downloadedCount} / ${totalFiles} Files`;
+            if (overlay.classList.contains('active') && statusText.style.color !== "rgb(239, 68, 68)") {
+                const percent = (downloadedCount / totalFiles) * 100;
+                progressFill.style.width = `${percent}%`;
+                statusText.innerText = `${downloadedCount} / ${totalFiles} Files`;
+            }
         }
     }
 
