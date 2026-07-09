@@ -27,7 +27,8 @@ const SUPABASE_KEY = 'sb_publishable_9s6sR6tS6IkVg3hrmSgTzg_iHCF19OX';
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const urlParams = new URLSearchParams(window.location.search);
-const activeLang = urlParams.get('lang') || 'en';
+// Check URL first, then LocalStorage. No hardcoded 'en' default.
+let activeLang = urlParams.get('lang') || localStorage.getItem('selectedLang');
 
 const langFlags = {
     'en': '🇬🇧', 'fr': '🇫🇷', 'it': '🇮🇹', 'de': '🇩🇪', 
@@ -361,9 +362,8 @@ function toggleAudio() {
 
 function openPlayer(activity, autoplay = false) {
     stopAudio();
-    currentPlayingActivity = activity; // <-- ADDED HERE
+    currentPlayingActivity = activity;
     
-    // Prevent background scrolling while drawer is open
     document.body.style.overflow = 'hidden';
     
     document.getElementById('player-image').src = activity.image || "https://images.unsplash.com/photo-1524047934617-cb782c24e5f3?auto=format&fit=crop&q=80&w=1000";
@@ -374,11 +374,10 @@ function openPlayer(activity, autoplay = false) {
     descContainer.innerHTML = '';
     fullScriptToRead = "";
     
-    // Split the string by newlines to create an array of paragraphs
     const paragraphs = activity.text.split(/\r?\n+/);
     
     paragraphs.forEach(p => {
-        if (p.trim() !== "") { // Ignore empty splits
+        if (p.trim() !== "") {
             const pEl = document.createElement('p'); 
             pEl.innerText = p.trim();
             descContainer.appendChild(pEl);
@@ -387,72 +386,123 @@ function openPlayer(activity, autoplay = false) {
     });
 
     if (activity.audioFile && activity.audioFile !== "null") {
-            currentActivityHasMp3 = true;
-            nativeAudio.src = activity.audioFile;
-            nativeAudio.onloadedmetadata = () => {
-                estimatedDuration = nativeAudio.duration;
-                audioDuration.innerText = formatTime(estimatedDuration);
-                if (autoplay) toggleAudio();
-            };
-            nativeAudio.onerror = () => {
-                fallbackToTTS(autoplay);
-            };
-        } else {
+        currentActivityHasMp3 = true;
+        nativeAudio.src = activity.audioFile;
+        nativeAudio.onloadedmetadata = () => {
+            estimatedDuration = nativeAudio.duration;
+            audioDuration.innerText = formatTime(estimatedDuration);
+            if (autoplay) toggleAudio();
+        };
+        nativeAudio.onerror = () => {
             fallbackToTTS(autoplay);
-        }
-
-        // --- NEW POCKET MEDIA CONTROL LOGIC ---
-        if ('mediaSession' in navigator) {
-            navigator.mediaSession.metadata = new MediaMetadata({
-                title: activity.title,
-                artist: 'Flagship Discovery Tour',
-                artwork: [
-                    { src: activity.image || 'default-icon.png', sizes: '512x512', type: 'image/jpeg' }
-                ]
-            });
-
-            navigator.mediaSession.setActionHandler('play', toggleAudio);
-            navigator.mediaSession.setActionHandler('pause', toggleAudio);
-            navigator.mediaSession.setActionHandler('seekbackward', () => {
-                if (currentActivityHasMp3) nativeAudio.currentTime = Math.max(0, nativeAudio.currentTime - 15);
-            });
-            navigator.mediaSession.setActionHandler('seekforward', () => {
-                if (currentActivityHasMp3) nativeAudio.currentTime = Math.min(estimatedDuration, nativeAudio.currentTime + 15);
-            });
-        }
-        // --------------------------------------
-
-        playerDrawer.classList.add('active');
-        drawerBackdrop.classList.add('active');
+        };
+    } else {
+        fallbackToTTS(autoplay);
     }
 
-function closeDrawer() {
-    // Restore background scrolling when drawer closes
+    if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: activity.title,
+            artist: 'Flagship Discovery Tour',
+            artwork: [
+                { src: activity.image || 'default-icon.png', sizes: '512x512', type: 'image/jpeg' }
+            ]
+        });
+
+        navigator.mediaSession.setActionHandler('play', toggleAudio);
+        navigator.mediaSession.setActionHandler('pause', toggleAudio);
+        navigator.mediaSession.setActionHandler('seekbackward', () => {
+            if (currentActivityHasMp3) nativeAudio.currentTime = Math.max(0, nativeAudio.currentTime - 15);
+        });
+        navigator.mediaSession.setActionHandler('seekforward', () => {
+            if (currentActivityHasMp3) nativeAudio.currentTime = Math.min(estimatedDuration, nativeAudio.currentTime + 15);
+        });
+    }
+
+    // --- NEW: Push History State ---
+    history.pushState({ drawerOpen: true }, "", "#stop");
+
+    playerDrawer.classList.add('active');
+    drawerBackdrop.classList.add('active');
+}
+
+// --- NEW: Accept popstate parameter ---
+function closeDrawer(isPopState = false) {
     document.body.style.overflow = '';
-    
     playerDrawer.classList.remove('active'); 
     drawerBackdrop.classList.remove('active'); 
     stopAudio();
+
+    // If closed via the UI X button or swipe, manually remove the hash
+    if (!isPopState && window.location.hash === "#stop") {
+        history.back();
+    }
 }
 
 audioToggleBtn.addEventListener('click', toggleAudio);
-document.getElementById('close-drawer-btn').addEventListener('click', closeDrawer);
-drawerBackdrop.addEventListener('click', closeDrawer);
+document.getElementById('close-drawer-btn').addEventListener('click', () => closeDrawer(false));
+drawerBackdrop.addEventListener('click', () => closeDrawer(false));
 
-
-// --- 6. Initialization ---
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('current-lang-flag').innerText = langFlags[activeLang] || '🌍';
-    
-    document.body.addEventListener('click', initAudio, { once: true });
-    fetchTourData(); 
+// --- NEW: Handle Browser Back Button ---
+window.addEventListener('popstate', () => {
+    if (playerDrawer.classList.contains('active')) {
+        closeDrawer(true); 
+    }
 });
 
-// --- 7. Language Switcher Logic ---
+// --- NEW: Safe Swipe-to-Close on Image Header Only ---
+const drawerHeader = document.querySelector('.drawer-image-header');
+let touchStartY = 0;
+let touchEndY = 0;
+
+drawerHeader.addEventListener('touchstart', e => {
+    touchStartY = e.changedTouches[0].screenY;
+    // Reset any existing transitions so the drag feels 1:1
+    playerDrawer.style.transition = 'none'; 
+}, { passive: true });
+
+drawerHeader.addEventListener('touchmove', e => {
+    touchEndY = e.changedTouches[0].screenY;
+    const deltaY = touchEndY - touchStartY;
+    
+    // Only allow dragging downwards
+    if (deltaY > 0) {
+        playerDrawer.style.transform = `translateY(${deltaY}px)`;
+    }
+}, { passive: true });
+
+drawerHeader.addEventListener('touchend', e => {
+    const deltaY = touchEndY - touchStartY;
+    
+    // Restore the CSS transition for smooth snapping/closing
+    playerDrawer.style.transition = 'transform 0.4s cubic-bezier(0.32, 0.72, 0, 1)';
+    playerDrawer.style.transform = ''; 
+    
+    if (deltaY > 50) {
+        closeDrawer(false);
+    }
+});
+
+
+// --- 6. Initialization & Language Switcher Logic ---
 const langPortal = document.getElementById('language-portal');
 const openLangBtn = document.getElementById('open-lang-btn');
 const closeLangBtn = document.getElementById('close-lang-btn');
 const langItems = document.querySelectorAll('#language-selection-list li');
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (!activeLang) {
+        // First visit: No language selected. Force the modal open.
+        langPortal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        // Note: fetchTourData() is NOT called yet.
+    } else {
+        // Return visit: Language exists. Start app normally.
+        document.getElementById('current-lang-flag').innerText = langFlags[activeLang] || '🌍';
+        document.body.addEventListener('click', initAudio, { once: true });
+        fetchTourData(); 
+    }
+});
 
 openLangBtn.addEventListener('click', () => {
     langPortal.classList.add('active');
@@ -460,6 +510,8 @@ openLangBtn.addEventListener('click', () => {
 });
 
 closeLangBtn.addEventListener('click', () => {
+    // Prevent closing if they haven't picked a language yet on first load
+    if (!activeLang) return; 
     langPortal.classList.remove('active');
     document.body.style.overflow = '';
 });
@@ -467,13 +519,16 @@ closeLangBtn.addEventListener('click', () => {
 langItems.forEach(item => {
     item.addEventListener('click', (e) => {
         const selectedLang = e.currentTarget.getAttribute('data-lang');
+        
+        // Save the choice locally
+        localStorage.setItem('selectedLang', selectedLang);
+
         if (selectedLang === activeLang) {
-            // If they pick the language they are already on, just close it
             closeLangBtn.click();
             return;
         }
         
-        // Update URL parameter and reload
+        // Reload with new language
         const currentUrl = new URL(window.location.href);
         currentUrl.searchParams.set('lang', selectedLang);
         window.location.href = currentUrl.toString();
