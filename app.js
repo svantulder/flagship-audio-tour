@@ -76,9 +76,10 @@ async function fetchTourData() {
 
         const completedIds = JSON.parse(localStorage.getItem('completedStops') || '[]');
 
-        activities = data.map(stop => ({
+        activities = data.map((stop, index) => ({
             id: stop.id,
-            title: stop.stop_translations[0].title,
+            // Prefix index as number if it is not the first stop (Welcome)
+            title: index === 0 ? stop.stop_translations[0].title : `${index}. ${stop.stop_translations[0].title}`,
             subtitle: stop.stop_translations[0].subtitle,
             icon: stop.icon,
             image: stop.image_url,
@@ -87,9 +88,7 @@ async function fetchTourData() {
             completed: completedIds.includes(stop.id) // Check if ID is in storage
         }));
 
-        // --- NEW LINE ADDED HERE ---
         cacheTourAssets(activities);
-        
         renderList();
 
     } catch (err) {
@@ -100,15 +99,19 @@ async function fetchTourData() {
             console.log("Network failed. Falling back to cached tour data.");
             const data = JSON.parse(cachedData);
             
-            activities = data.map(stop => ({
+            // Re-fetch progress array so offline users keep their checkmarks
+            const completedIds = JSON.parse(localStorage.getItem('completedStops') || '[]');
+
+            activities = data.map((stop, index) => ({
                 id: stop.id,
-                title: stop.stop_translations[0].title,
+                // Prefix index for offline mode identically
+                title: index === 0 ? stop.stop_translations[0].title : `${index}. ${stop.stop_translations[0].title}`,
                 subtitle: stop.stop_translations[0].subtitle,
                 icon: stop.icon,
                 image: stop.image_url,
                 audioFile: stop.stop_translations[0].audio_url,
                 text: stop.stop_translations[0].script_text,
-                completed: false
+                completed: completedIds.includes(stop.id) // Fixed hardcoded false
             }));
             
             renderList();
