@@ -282,6 +282,12 @@ function stopAudio() {
     audioCurrent.innerText = "0:00";
 }
 
+function fallbackToTTS(autoplay) {
+    currentActivityHasMp3 = false;
+    document.getElementById('audio-duration').innerText = "TTS";
+    if (autoplay) toggleAudio();
+}
+
 let isScrubbing = false;
 
 // Stop timer from updating slider while user is dragging
