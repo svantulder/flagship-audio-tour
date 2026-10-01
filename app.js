@@ -126,7 +126,7 @@ async function cacheTourAssets(tourActivities) {
     if (!('caches' in window)) return;
     
     // Ignore audio files for languages relying on device TTS
-    const forceTTS = activeLang === 'zh-CN' || activeLang === 'zh-HK';
+    const forceTTS = activeLang === 'zh-HK';
     
     const urlsToCache = tourActivities
         .flatMap(act => [
@@ -426,7 +426,7 @@ function openPlayer(activity, autoplay = false) {
     });
 
     // Force device TTS for Mandarin and Cantonese
-    const forceTTS = activeLang === 'zh-CN' || activeLang === 'zh-HK';
+    const forceTTS = activeLang === 'zh-HK';
 
     if (!forceTTS && activity.audioFile && activity.audioFile !== "null") {
         currentActivityHasMp3 = true;
