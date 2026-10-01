@@ -388,7 +388,10 @@ function openPlayer(activity, autoplay = false) {
         }
     });
 
-    if (activity.audioFile && activity.audioFile !== "null") {
+    // Force device TTS for Mandarin and Cantonese
+    const forceTTS = activeLang === 'zh-CN' || activeLang === 'zh-HK';
+
+    if (!forceTTS && activity.audioFile && activity.audioFile !== "null") {
         currentActivityHasMp3 = true;
         nativeAudio.src = activity.audioFile;
         nativeAudio.onloadedmetadata = () => {
