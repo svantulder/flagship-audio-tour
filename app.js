@@ -133,7 +133,7 @@ async function cacheTourAssets(tourActivities) {
             act.image, 
             forceTTS ? null : act.audioFile
         ])
-        .filter(url => url && url !== "null" && url !== "");
+        .filter(url => url && url !== "null" && url !== "");;;;;;;
 
     if (urlsToCache.length === 0) return;
 
@@ -291,6 +291,14 @@ function stopAudio() {
 function fallbackToTTS(autoplay) {
     currentActivityHasMp3 = false;
     document.getElementById('audio-duration').innerText = "TTS";
+    
+    // Fix: Estimate reading duration so the interval timer doesn't instantly kill the audio.
+    // Chinese characters are read at roughly 4.5 per second. Roman alphabets at roughly 14 per second.
+    const charsPerSecond = (activeLang === 'zh-CN' || activeLang === 'zh-HK') ? 4.5 : 14;
+    
+    // Set duration with a minimum 5-second floor to prevent instant-cancels on very short strings
+    estimatedDuration = Math.max(fullScriptToRead.length / charsPerSecond, 5); 
+    
     if (autoplay) toggleAudio();
 }
 
