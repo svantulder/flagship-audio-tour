@@ -348,6 +348,23 @@ function toggleAudio() {
                 const utterance = new SpeechSynthesisUtterance(fullScriptToRead);
                 utterance.lang = activeLang; 
                 utterance.rate = 0.9;
+                
+                // --- NEW: Explicitly search for and assign a matching OS voice ---
+                const voices = window.speechSynthesis.getVoices();
+                
+                // Try an exact match first, normalizing underscores (zh_CN -> zh-CN)
+                let targetVoice = voices.find(v => v.lang.replace('_', '-').toLowerCase() === activeLang.toLowerCase());
+                
+                // Broad fallback: if the system uses weird regional tags, just grab the first available Chinese voice
+                if (!targetVoice && activeLang.startsWith('zh')) {
+                    targetVoice = voices.find(v => v.lang.toLowerCase().includes('zh'));
+                }
+                
+                if (targetVoice) {
+                    utterance.voice = targetVoice;
+                }
+                // ----------------------------------------------------------------
+
                 window.speechSynthesis.speak(utterance);
             } else { window.speechSynthesis.resume(); }
         }
