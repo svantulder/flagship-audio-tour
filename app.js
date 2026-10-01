@@ -125,8 +125,14 @@ async function fetchTourData() {
 async function cacheTourAssets(tourActivities) {
     if (!('caches' in window)) return;
     
+    // Ignore audio files for languages relying on device TTS
+    const forceTTS = activeLang === 'zh-CN' || activeLang === 'zh-HK';
+    
     const urlsToCache = tourActivities
-        .flatMap(act => [act.image, act.audioFile])
+        .flatMap(act => [
+            act.image, 
+            forceTTS ? null : act.audioFile
+        ])
         .filter(url => url && url !== "null" && url !== "");
 
     if (urlsToCache.length === 0) return;
